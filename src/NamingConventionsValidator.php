@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Elikh;
+namespace App;
 
 
 class NamingConventionsValidator
@@ -15,7 +15,7 @@ class NamingConventionsValidator
 
     private $errors = [];
 
-    public function validate(): array
+    public function validate(): bool
     {
         if (empty($this->rules)) {
             $this->addRule(self::DEFAULT_RULE_NAME, self::DEFAULT_RULE);
@@ -29,7 +29,7 @@ class NamingConventionsValidator
             $this->validateValue($value);
         }
 
-        return $this->errors;
+        return count($this->errors) == 0 ? true : false;
     }
 
     public function addRule(string $ruleName, string $rule): void
@@ -50,6 +50,11 @@ class NamingConventionsValidator
     public function getCheckedValues():array
     {
         return $this->values;
+    }
+
+    public function getErrors():array
+    {
+        return $this->errors;
     }
 
     public function getErrorMessage(string $glue = ' / '): string
