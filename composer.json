@@ -1,0 +1,20 @@
+{
+    "name": "elikh/naming-conventions-validator",
+    "description": "validate array of names for customer PCRE rules",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Evan Likhvar"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Elikh\\": "src/"
+        }
+    }
+}
