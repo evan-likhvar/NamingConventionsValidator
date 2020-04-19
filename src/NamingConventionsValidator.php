@@ -14,7 +14,7 @@ class NamingConventionsValidator extends TestCase
 
     private $errors = [];
 
-    public function validate(array $values, array $rule = ['single' => '/^[a-z][a-z0-9_]+[^s]$/']): bool
+    public function validate(array $values, array $rule = ['single' => '/^[a-z][a-z0-9_]+[^s]$/']): string
     {
         $this->addRule($rule);
 
