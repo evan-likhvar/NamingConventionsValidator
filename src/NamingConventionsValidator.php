@@ -3,63 +3,36 @@
 
 namespace App;
 
+use PHPUnit\Framework\TestCase;
 
-class NamingConventionsValidator
+
+class NamingConventionsValidator extends TestCase
 {
-    const DEFAULT_RULE_NAME = 'single';
-    const DEFAULT_RULE = '/^[a-z][a-z0-9_]+[^s]$/';
-
     private $rules = []; //['single'=>'/^[a-z][a-z0-9_]+[^s]$/','nextName'=>'nextRule']
 
     private $values = []; //['val1','val2']
 
     private $errors = [];
 
-    public function validate(): bool
+    public function validate(array $values, array $rule = ['single' => '/^[a-z][a-z0-9_]+[^s]$/']): bool
     {
-        if (empty($this->rules)) {
-            $this->addRule(self::DEFAULT_RULE_NAME, self::DEFAULT_RULE);
-        }
-
-        if (empty($this->values)) {
-            throw new \DomainException('Nothing to validate');
-        }
+        $this->addRule($rule);
 
         foreach ($this->values as $value) {
             $this->validateValue($value);
         }
 
-        return count($this->errors) == 0 ? true : false;
+        return implode(PHP_EOL,$this->errors);
     }
 
-    public function addRule(string $ruleName, string $rule): void
+    public function addRule(array $rule): void
     {
-        $this->rules[$ruleName] = $rule;
+        $this->rules = array_merge($this->rules, $rule);
     }
 
     public function getRules(): array
     {
         return $this->rules;
-    }
-
-    public function addCheckedValues(array $values): void
-    {
-        $this->values = array_merge($this->values,$values);
-    }
-
-    public function getCheckedValues():array
-    {
-        return $this->values;
-    }
-
-    public function getErrors():array
-    {
-        return $this->errors;
-    }
-
-    public function getErrorMessage(string $glue = ' / '): string
-    {
-        return implode($glue,$this->errors);
     }
 
     private function validateValue(string $value): void
