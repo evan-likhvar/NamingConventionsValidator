@@ -16,6 +16,7 @@ class NamingConventionsValidator extends TestCase
 
     public function validate(array $values, array $rule = ['single' => '/^[a-z][a-z0-9_]+[^s]$/']): string
     {
+        $this->values = $values;
         $this->addRule($rule);
 
         foreach ($this->values as $value) {
