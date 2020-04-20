@@ -10,17 +10,17 @@ class NamingConventionsValidator extends TestCase
 {
     private $rules = []; //['single'=>'/^[a-z][a-z0-9_]+[^s]$/','nextName'=>'nextRule']
 
-    private $values = []; //['val1','val2']
+    private $checkedValues = []; //['val1','val2']
 
     private $errors = [];
 
-    public function validate(array $values, array $rule = ['single' => '/^[a-z][a-z0-9_]+[^s]$/']): string
+    public function validate(array $checkedValues, array $rule = ['single' => '/^[a-z][a-z0-9_]+[^s]$/']): string
     {
-        $this->values = $values;
+        $this->checkedValues = $checkedValues;
         $this->addRule($rule);
 
-        foreach ($this->values as $value) {
-            $this->validateValue($value);
+        foreach ($this->checkedValues as $checkedValue) {
+            $this->validateValue($checkedValue);
         }
 
         return implode(PHP_EOL,$this->errors);
@@ -36,22 +36,22 @@ class NamingConventionsValidator extends TestCase
         return $this->rules;
     }
 
-    private function validateValue(string $value): void
+    private function validateValue(string $checkedValue): void
     {
         foreach ($this->rules as $ruleName => $rule) {
-            if (!$this->check($value, $rule)) {
-                $this->addError($value, $ruleName);
+            if (!$this->check($checkedValue, $rule)) {
+                $this->addError($checkedValue, $ruleName);
             }
         }
     }
 
-    private function check(string $value, string $rule): bool
+    private function check(string $checkedValue, string $rule): bool
     {
-        return preg_match($rule, $value) ? true : false;
+        return preg_match($rule, $checkedValue) ? true : false;
     }
 
-    private function addError(string $value, string $ruleName): void
+    private function addError(string $checkedValue, string $ruleName): void
     {
-        $this->errors[] = "Value '$value' does not match rule '$ruleName'";
+        $this->errors[] = "Value '$checkedValue' does not match rule '$ruleName'";
     }
 }
