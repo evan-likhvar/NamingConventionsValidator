@@ -38,7 +38,7 @@ abstract class NamingConventionsValidator extends KernelTestCase
             $this->validateValue($checkedName);
         }
 
-        $this->assertTrue(empty($errors), implode(PHP_EOL, $this->errors));
+        $this->assertTrue(empty($this->errors), implode(PHP_EOL, $this->errors));
     }
 
     private function validateValue(string $checkedName): void
