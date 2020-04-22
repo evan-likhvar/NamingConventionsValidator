@@ -17,5 +17,8 @@
         "psr-4": {
             "Elikh\\": "src/"
         }
+    },
+    "require-dev": {
+        "symfony/framework-bundle": "^5.0"
     }
 }

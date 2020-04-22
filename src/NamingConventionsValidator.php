@@ -2,9 +2,9 @@
 
 namespace Elikh;
 
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-abstract class NamingConventionsValidator extends TestCase
+abstract class NamingConventionsValidator extends KernelTestCase
 {
     private $errors = [];
 
@@ -12,8 +12,12 @@ abstract class NamingConventionsValidator extends TestCase
      * The method returns a list of names to check. ['name1','name2',..]
      * @return array
      */
-    abstract public function getNames(): array;
-
+    public function getNames(): array
+    {
+        $this->bootKernel();
+        $connection = self::$kernel->getContainer()->get('doctrine.orm.default_entity_manager')->getConnection();
+        return $connection->getSchemaManager()->listTableNames();
+    }
     /**
      * The method returns a list of names to skip checking ['name1','name2',..]
      * @return array
